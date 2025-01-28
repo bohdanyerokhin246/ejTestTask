@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var DB *sql.DB
+var PsqlDB *sql.DB
 
 func Connect() {
 	var err error
@@ -20,15 +20,13 @@ func Connect() {
 		os.Getenv("ejNameDB"),
 		os.Getenv("sslModeDB"))
 
-	// Открытие соединения
-	DB, err = sql.Open("postgres", connStr)
+	PsqlDB, err = sql.Open("postgres", connStr)
 	if err != nil {
 		fmt.Printf("Failed to connect to the database: %v\n", err)
 	}
-	defer DB.Close()
+	defer PsqlDB.Close()
 
-	// Проверка соединения
-	if err = DB.Ping(); err != nil {
+	if err = PsqlDB.Ping(); err != nil {
 		fmt.Printf("Не удалось установить соединение: %v\n", err)
 	} else {
 		fmt.Println("DB connected")
