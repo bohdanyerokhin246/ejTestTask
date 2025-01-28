@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "ejTestTask/app"
 
+func main() {
+	app.Run()
 }
