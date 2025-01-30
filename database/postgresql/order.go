@@ -28,6 +28,8 @@ func CreateOrder(order config.Order) (int, error) {
 
 		sum += float64(product.Quantity) * productFromDB.Price
 		product.Price = productFromDB.Price
+		product.Name = productFromDB.Name
+		product.Description = productFromDB.Description
 
 		productFromDB.Quantity -= product.Quantity
 		err = UpdateProduct(productFromDB)
