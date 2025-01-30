@@ -20,6 +20,33 @@ func GetSellerByID(id int) (config.Seller, error) {
 	return seller, err
 }
 
+func GetSellers() ([]config.Seller, error) {
+	var sellers []config.Seller
+
+	query := `SELECT * FROM sellers`
+	rows, err := database.PsqlDB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var seller config.Seller
+
+		err = rows.Scan(&seller.ID, &seller.Name, &seller.Phone)
+		if err != nil {
+			return nil, err
+		}
+		sellers = append(sellers, seller)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return sellers, nil
+}
+
 func UpdateSeller(seller config.Seller) error {
 	query := `UPDATE sellers SET name = $1, phone = $2 WHERE id = $3`
 	_, err := database.PsqlDB.Exec(query, seller.Name, seller.Phone, seller.ID)
