@@ -24,10 +24,9 @@ func Connect() {
 	if err != nil {
 		fmt.Printf("Failed to connect to the database: %v\n", err)
 	}
-	defer PsqlDB.Close()
 
 	if err = PsqlDB.Ping(); err != nil {
-		fmt.Printf("Не удалось установить соединение: %v\n", err)
+		fmt.Printf("Pinging is failed. Error: %v\n", err)
 	} else {
 		fmt.Println("DB connected")
 	}
